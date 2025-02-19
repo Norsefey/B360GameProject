@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 2cc3c4aa21bca744eafe2b9a3ab6ea39
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 285425
+  packageName: Bike Lab Demo
+  packageVersion: 1.0
+  assetPath: Assets/BikeLab/Prefabs/CrossBike.prefab
+  uploadId: 672212

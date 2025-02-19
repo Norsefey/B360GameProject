@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 67e27c9af1fcfb6489f2487419037935
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 4300000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 285425
+  packageName: Bike Lab Demo
+  packageVersion: 1.0
+  assetPath: Assets/BikeLab/Meshes/CrossBikeChain.asset
+  uploadId: 672212
