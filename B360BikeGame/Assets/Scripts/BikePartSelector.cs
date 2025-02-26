@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -15,23 +16,37 @@ public class BikePartSelector : MonoBehaviour
     [SerializeField] private TextMeshProUGUI priceText;
     [SerializeField] private Slider durabilitySlider;
     [SerializeField] private Image objectIconImage;
-    [SerializeField] private TextMeshProUGUI categoryText;
-
+    [SerializeField] private TextMeshProUGUI typeName;
+    [SerializeField] private TextMeshProUGUI typeDescription;
+    [SerializeField] private Button showAlternativesButton;
+    
+    [Header("Alternatives Panel")]
+    [SerializeField] private GameObject alternativesPanel;
+    [SerializeField] private Transform alternativesContainer;
+    [SerializeField] private GameObject alternativeItemPrefab;
+    
     private Camera mainCamera;
-    private GameObject currentlyHighlighted;
-    private GameObject currentlySelected;
+    private PartData currentlyHighlighted;
+    private PartData currentlySelected;
     private Material[] originalMaterials;
 
     void Start()
     {
         mainCamera = Camera.main;
 
-        // Hide UI panel initially
+        // Hide UI panels initially
         if (objectInfoPanel != null)
             objectInfoPanel.SetActive(false);
+
+        if (alternativesPanel != null)
+            alternativesPanel.SetActive(false);
+
+        // Setup alternatives button
+        if (showAlternativesButton != null)
+        {
+            showAlternativesButton.onClick.AddListener(ShowAlternatives);
+        }
     }
-
-
     void Update()
     {
         // Check if mouse is over UI elements
@@ -41,7 +56,6 @@ public class BikePartSelector : MonoBehaviour
         HandleHighlighting();
         HandleSelection();
     }
-
     void HandleHighlighting()
     {
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -59,7 +73,7 @@ public class BikePartSelector : MonoBehaviour
                 UnhighlightCurrentObject();
 
                 // Highlight new object
-                currentlyHighlighted = hitObject;
+                currentlyHighlighted = hitObject.GetComponent<PartData>();
                 HighlightObject(currentlyHighlighted);
             }
         }
@@ -69,21 +83,20 @@ public class BikePartSelector : MonoBehaviour
             UnhighlightCurrentObject();
         }
     }
-
     void HandleSelection()
     {
         // When left mouse button is clicked
         if (Input.GetMouseButtonDown(0) && currentlyHighlighted != null)
         {
-            // Deselect previous object if there is one
-            if (currentlySelected != null && currentlySelected == currentlyHighlighted)
+            // When left mouse button is clicked
+            if (Input.GetMouseButtonDown(0) && currentlyHighlighted != null)
             {
-                // Perform any deselection logic here
-                objectInfoPanel.SetActive(false);
-                currentlySelected = null;
-            }
-            else
-            {
+                // Deselect previous object if there is one
+                if (currentlySelected != null && currentlySelected != currentlyHighlighted)
+                {
+                    // Perform any deselection logic here
+                }
+
                 // Select new object
                 currentlySelected = currentlyHighlighted;
 
@@ -93,15 +106,33 @@ public class BikePartSelector : MonoBehaviour
                     objectInfoPanel.SetActive(true);
 
                     // Populate UI with object info
-                    PopulateObjectInfo(currentlySelected);
+                    PopulateObjectInfo(currentlySelected.partStats);
+
+                    // Show alternatives button only if there are alternatives
+                    UpdateAlternativesButton();
                 }
+            }
+
+            // Close panel when clicking elsewhere
+            if (Input.GetMouseButtonDown(0) && currentlyHighlighted == null && objectInfoPanel != null && objectInfoPanel.activeSelf)
+            {
+                CloseInfoPanel();
             }
         }
     }
-
-    void HighlightObject(GameObject obj)
+    public void CloseInfoPanel()
     {
-        Renderer renderer = obj.GetComponent<Renderer>();
+        if (objectInfoPanel != null)
+            objectInfoPanel.SetActive(false);
+
+        if (alternativesPanel != null)
+            alternativesPanel.SetActive(false);
+
+        currentlySelected = null;
+    }
+    void HighlightObject(PartData part)
+    {
+        Renderer renderer = part.GetComponent<Renderer>();
         if (renderer != null)
         {
             // Store original materials
@@ -117,7 +148,6 @@ public class BikePartSelector : MonoBehaviour
             renderer.materials = highlightMaterials;
         }
     }
-
     void UnhighlightCurrentObject()
     {
         if (currentlyHighlighted != null)
@@ -132,30 +162,150 @@ public class BikePartSelector : MonoBehaviour
             currentlyHighlighted = null;
         }
     }
-
-    void PopulateObjectInfo(GameObject obj)
+    public void PopulateObjectInfo(PartStats part)
     {
-         PartData data = obj.GetComponent<PartData>();
-        if (data != null)
+        if (part != null)
         {
-            nameText.text = data.partName;
-            descriptionText.text = data.partDescription;
-            priceText.text = "$" + data.partStats.price.ToString();
+            // Set basic info
+            if (nameText != null)
+                nameText.text = part.partName;
 
-           /* // Set durability slider
+            if (descriptionText != null)
+                descriptionText.text = part.description;
+
+            // Set price
+            if (priceText != null)
+                priceText.text = "$" + part.price.ToString();
+
+            // Set durability slider
             if (durabilitySlider != null)
             {
                 durabilitySlider.maxValue = 100f;
-                durabilitySlider.value = data.GetDurabilityPercentage();
-            }*/
+                durabilitySlider.value = part.durability;
+            }
 
             // Set icon
-            if (objectIconImage != null && data.partIcon != null)
-                objectIconImage.sprite = data.partIcon;
+            if (objectIconImage != null && part.icon != null)
+                objectIconImage.sprite = part.icon;
 
-            // Set category
-            if (categoryText != null)
-                categoryText.text = data.category + " - " + data.partType;
+            if (typeName != null)
+                typeName.text = part.partType;
+
+            // Update alternatives button
+            UpdateAlternativesButton();
         }
+    }
+    private void UpdateAlternativesButton()
+    {
+        if (showAlternativesButton == null || currentlySelected == null)
+            return;
+
+        AlternativeParts altComponent = currentlySelected.GetComponent<AlternativeParts>();
+        if (altComponent == null || altComponent.GetAlternativesCount() == 0)
+        {
+            showAlternativesButton.gameObject.SetActive(false);
+        }
+        else
+        {
+            showAlternativesButton.gameObject.SetActive(true);
+        }
+    }
+    public void SetSelectedObject(PartData part)
+    {
+        currentlySelected = part;
+
+        // If we need to highlight it as well
+        if (currentlyHighlighted != null)
+        {
+            UnhighlightCurrentObject();
+        }
+        currentlyHighlighted = part;
+        HighlightObject(currentlyHighlighted);
+    }
+    public void ShowAlternatives()
+    {
+        if (currentlySelected == null || alternativesPanel == null || alternativesContainer == null)
+            return;
+
+        AlternativeParts altComponent = currentlySelected.GetComponent<AlternativeParts>();
+        if (altComponent == null)
+            return;
+
+        List<PartStats> alternatives = altComponent.GetAlternatives();
+        if (alternatives.Count == 0)
+            return;
+
+        // Clear previous alternatives
+        foreach (Transform child in alternativesContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Populate alternatives
+        for (int i = 0; i < alternatives.Count; i++)
+        {
+            PartStats alt = alternatives[i];
+            CreateAlternativeItem(alt, i);
+        }
+
+        // Show the panel
+        alternativesPanel.SetActive(true);
+    }
+    private void CreateAlternativeItem(PartStats alternative, int index)
+    {
+        if (alternativeItemPrefab == null || alternativesContainer == null)
+            return;
+
+        // Instantiate item UI
+        GameObject itemUI = Instantiate(alternativeItemPrefab, alternativesContainer);
+
+        // Set up the UI elements
+        AlternativePartUI partUI = itemUI.GetComponent<AlternativePartUI>();
+        partUI.Setup(alternative, index);
+
+        // Add button functionality
+        
+        if (partUI.buyButton != null)
+        {
+            int capturedIndex = index;
+            partUI.buyButton.onClick.AddListener(() => BuyPart(capturedIndex));
+        }
+
+        if (partUI.infoButton != null)
+        {
+            int capturedIndex = index;
+            partUI.infoButton.onClick.AddListener(() => ShowPartInformation(capturedIndex));
+        }
+    }
+    private void BuyPart(int index)
+    {
+        if (currentlySelected == null)
+            return;
+
+        AlternativeParts altComponent = currentlySelected.GetComponent<AlternativeParts>();
+        if (altComponent == null)
+            return;
+
+        // Switch to the alternative
+        altComponent.SwitchToAlternative(index);
+
+        // Update the UI
+        PopulateObjectInfo(currentlySelected.partStats);
+    }
+    private void ShowPartInformation(int index)
+    {
+        if (currentlySelected == null)
+            return;
+
+        AlternativeParts altComponent = currentlySelected.GetComponent<AlternativeParts>();
+        if (altComponent == null)
+            return;
+
+        PopulateObjectInfo(altComponent.GetAAlternative(index));
+    }
+    public void CloseAlternativesPanel()
+    {
+        if (alternativesPanel != null)
+            alternativesPanel.SetActive(false);
     }
 }
