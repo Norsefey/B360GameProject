@@ -144,7 +144,7 @@ Transform:
   m_GameObject: {fileID: 30184747}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.477, z: 1.564}
+  m_LocalPosition: {x: 0, y: 1.477, z: 1.096}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -199,6 +199,7 @@ GameObject:
   - component: {fileID: 92513141}
   - component: {fileID: 92513140}
   - component: {fileID: 92513143}
+  - component: {fileID: 92513144}
   m_Layer: 0
   m_Name: HandleBar
   m_TagString: Untagged
@@ -317,6 +318,19 @@ MonoBehaviour:
     weight: 1
     rarity: 0
     partType: Type
+--- !u!114 &92513144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92513138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70c3c6a9800dde948b07db46a47afb58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alternatives: []
 --- !u!1 &131349301
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,6 +419,7 @@ GameObject:
   - component: {fileID: 160484154}
   - component: {fileID: 160484153}
   - component: {fileID: 160484156}
+  - component: {fileID: 160484157}
   m_Layer: 0
   m_Name: Engine
   m_TagString: Untagged
@@ -421,7 +436,7 @@ Transform:
   m_GameObject: {fileID: 160484151}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.946, z: 0.982}
+  m_LocalPosition: {x: 0, y: 0.946, z: 0.514}
   m_LocalScale: {x: 0.546285, y: 0.6561058, z: 0.45982373}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -514,15 +529,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partStats:
-    partName: 
+    partName: Engine
     icon: {fileID: 0}
     prefab: {fileID: 0}
     durability: 100
     price: 10
-    description: Alternative description
+    description: Moves the Bike
     weight: 1
     rarity: 0
-    partType: Type
+    partType: Engine
+--- !u!114 &160484157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160484151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70c3c6a9800dde948b07db46a47afb58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alternatives: []
 --- !u!1 &178065073
 GameObject:
   m_ObjectHideFlags: 0
@@ -1850,7 +1878,7 @@ GameObject:
   - component: {fileID: 553772038}
   - component: {fileID: 553772041}
   m_Layer: 0
-  m_Name: Fork_l
+  m_Name: Fork_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1959,15 +1987,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partStats:
-    partName: 
+    partName: Fork Left
     icon: {fileID: 0}
     prefab: {fileID: 0}
     durability: 100
     price: 10
-    description: Alternative description
+    description: 'The left fork '
     weight: 1
     rarity: 0
-    partType: Type
+    partType: Suspension
 --- !u!1 &572258161
 GameObject:
   m_ObjectHideFlags: 0
@@ -1981,6 +2009,7 @@ GameObject:
   - component: {fileID: 572258164}
   - component: {fileID: 572258163}
   - component: {fileID: 572258166}
+  - component: {fileID: 572258167}
   m_Layer: 0
   m_Name: ShockAbsorber
   m_TagString: Untagged
@@ -1997,7 +2026,7 @@ Transform:
   m_GameObject: {fileID: 572258161}
   serializedVersion: 2
   m_LocalRotation: {x: 0.29305634, y: -0, z: -0, w: 0.9560952}
-  m_LocalPosition: {x: 0, y: 0.965, z: 0.091}
+  m_LocalPosition: {x: 0, y: 0.965, z: -0.377}
   m_LocalScale: {x: 0.20365901, y: 0.38492873, z: 0.20365903}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2090,15 +2119,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partStats:
-    partName: 
+    partName: ' Shock Absorber'
     icon: {fileID: 0}
     prefab: {fileID: 0}
     durability: 100
     price: 10
-    description: Alternative description
+    description: Provides suspension for the bike
     weight: 1
     rarity: 0
-    partType: Type
+    partType: suspension
+--- !u!114 &572258167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572258161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70c3c6a9800dde948b07db46a47afb58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alternatives: []
 --- !u!1 &633673998
 GameObject:
   m_ObjectHideFlags: 0
@@ -2282,7 +2324,7 @@ Transform:
   m_GameObject: {fileID: 801333458}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.70710576, w: 0.7071079}
-  m_LocalPosition: {x: -0, y: 0.5, z: -0.789}
+  m_LocalPosition: {x: -0, y: 0.5, z: -1.257}
   m_LocalScale: {x: 1, y: 0.061977, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2539,7 +2581,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partStats:
-    partName: 
+    partName: Front Wheel
     icon: {fileID: 0}
     prefab: {fileID: 0}
     durability: 100
@@ -2547,7 +2589,7 @@ MonoBehaviour:
     description: Alternative description
     weight: 1
     rarity: 0
-    partType: Type
+    partType: Wheel
 --- !u!1 &914685327
 GameObject:
   m_ObjectHideFlags: 0
@@ -3884,7 +3926,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.000061035156}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1463409615
@@ -4750,6 +4792,7 @@ GameObject:
   - component: {fileID: 1961313795}
   - component: {fileID: 1961313794}
   - component: {fileID: 1961313797}
+  - component: {fileID: 1961313798}
   m_Layer: 0
   m_Name: RearSuspension
   m_TagString: Untagged
@@ -4766,7 +4809,7 @@ Transform:
   m_GameObject: {fileID: 1961313792}
   serializedVersion: 2
   m_LocalRotation: {x: -0.14845096, y: -0, z: -0, w: 0.98891973}
-  m_LocalPosition: {x: 0, y: 0.617, z: -0.273}
+  m_LocalPosition: {x: 0, y: 0.617, z: -0.741}
   m_LocalScale: {x: 0.20662, y: 0.26017112, z: 1.2977}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4859,15 +4902,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partStats:
-    partName: 
+    partName: Rear Suspension
     icon: {fileID: 0}
     prefab: {fileID: 0}
     durability: 100
     price: 10
-    description: Alternative description
+    description: Provides suspension for the bike
     weight: 1
     rarity: 0
-    partType: Type
+    partType: suspension
+--- !u!114 &1961313798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961313792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70c3c6a9800dde948b07db46a47afb58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alternatives: []
 --- !u!1 &1992848567
 GameObject:
   m_ObjectHideFlags: 0
@@ -4879,6 +4935,7 @@ GameObject:
   - component: {fileID: 1992848570}
   - component: {fileID: 1992848569}
   - component: {fileID: 1992848571}
+  - component: {fileID: 1992848572}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4946,7 +5003,7 @@ Transform:
   m_GameObject: {fileID: 1992848567}
   serializedVersion: 2
   m_LocalRotation: {x: 0.1531421, y: 0.6833894, z: -0.14994115, w: 0.6978854}
-  m_LocalPosition: {x: -2.593, y: 1.9228306, z: -0.073}
+  m_LocalPosition: {x: -2.593, y: 1.878, z: -0.073}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4996,6 +5053,32 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &1992848572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992848567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e74b5f3416a1d1459a606149600fab2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1293121326}
+  defaultDistance: 5
+  defaultHeight: 2
+  rotationSpeed: 100
+  heightChangeSpeed: 5
+  minHeight: 1
+  maxHeight: 5
+  zoomSpeed: 5
+  minZoomDistance: 2
+  maxZoomDistance: 5
+  zoomTarget: {fileID: 801333459}
+  zoomInDistance: 2
+  zoomedPanSpeed: 2
+  maxPanDistance: 5
 --- !u!1 &2006505424
 GameObject:
   m_ObjectHideFlags: 0
@@ -5010,7 +5093,7 @@ GameObject:
   - component: {fileID: 2006505426}
   - component: {fileID: 2006505429}
   m_Layer: 0
-  m_Name: Fork_L
+  m_Name: Fork_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5119,15 +5202,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partStats:
-    partName: 
+    partName: Fork Right
     icon: {fileID: 0}
     prefab: {fileID: 0}
     durability: 100
     price: 10
-    description: Alternative description
+    description: The right fork
     weight: 1
     rarity: 0
-    partType: Type
+    partType: Suspension
 --- !u!1 &2048158228
 GameObject:
   m_ObjectHideFlags: 0
@@ -5442,6 +5525,7 @@ GameObject:
   - component: {fileID: 2120351379}
   - component: {fileID: 2120351378}
   - component: {fileID: 2120351381}
+  - component: {fileID: 2120351382}
   m_Layer: 0
   m_Name: Seat
   m_TagString: Untagged
@@ -5458,7 +5542,7 @@ Transform:
   m_GameObject: {fileID: 2120351376}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.014, y: 1.113, z: 0.814}
+  m_LocalPosition: {x: 0.014, y: 1.113, z: 0.34600002}
   m_LocalScale: {x: 0.46281967, y: 0.5792768, z: 1.4523816}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5551,15 +5635,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partStats:
-    partName: 
+    partName: Seat
     icon: {fileID: 0}
     prefab: {fileID: 0}
     durability: 100
     price: 10
-    description: Alternative description
+    description: The Seat BIke
     weight: 1
     rarity: 0
-    partType: Type
+    partType: Seat
+--- !u!114 &2120351382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120351376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70c3c6a9800dde948b07db46a47afb58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alternatives: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

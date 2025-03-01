@@ -26,6 +26,7 @@ public class BikePartSelector : MonoBehaviour
     [SerializeField] private GameObject alternativeItemPrefab;
     
     private Camera mainCamera;
+    private CameraController camController;
     private PartData currentlyHighlighted;
     private PartData currentlySelected;
     private Material[] originalMaterials;
@@ -33,7 +34,7 @@ public class BikePartSelector : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
-
+        camController = mainCamera.GetComponent<CameraController>();
         // Hide UI panels initially
         if (objectInfoPanel != null)
             objectInfoPanel.SetActive(false);
@@ -85,39 +86,37 @@ public class BikePartSelector : MonoBehaviour
     }
     void HandleSelection()
     {
+    
         // When left mouse button is clicked
         if (Input.GetMouseButtonDown(0) && currentlyHighlighted != null)
         {
-            // When left mouse button is clicked
-            if (Input.GetMouseButtonDown(0) && currentlyHighlighted != null)
+            // Deselect previous object if there is one
+            if (currentlySelected != null && currentlySelected != currentlyHighlighted)
             {
-                // Deselect previous object if there is one
-                if (currentlySelected != null && currentlySelected != currentlyHighlighted)
-                {
-                    // Perform any deselection logic here
-                }
-
-                // Select new object
-                currentlySelected = currentlyHighlighted;
-
-                // Show UI panel
-                if (objectInfoPanel != null)
-                {
-                    objectInfoPanel.SetActive(true);
-
-                    // Populate UI with object info
-                    PopulateObjectInfo(currentlySelected.partStats);
-
-                    // Show alternatives button only if there are alternatives
-                    UpdateAlternativesButton();
-                }
+                // Perform any deselection logic here
             }
 
-            // Close panel when clicking elsewhere
-            if (Input.GetMouseButtonDown(0) && currentlyHighlighted == null && objectInfoPanel != null && objectInfoPanel.activeSelf)
+            // Select new object
+            currentlySelected = currentlyHighlighted;
+            camController.SetZoomTarget(currentlySelected.transform);
+            // Show UI panel
+            if (objectInfoPanel != null)
             {
-                CloseInfoPanel();
+                objectInfoPanel.SetActive(true);
+
+                // Populate UI with object info
+                PopulateObjectInfo(currentlySelected.partStats);
+
+                // Show alternatives button only if there are alternatives
+                UpdateAlternativesButton();
             }
+        }
+
+        // Close panel when clicking elsewhere
+        if (Input.GetMouseButtonDown(0) && currentlyHighlighted == null && objectInfoPanel != null && objectInfoPanel.activeSelf)
+        {
+            camController.ReturnToDefaultPosition();
+            CloseInfoPanel();
         }
     }
     public void CloseInfoPanel()
